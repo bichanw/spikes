@@ -39,15 +39,22 @@ else
     pcFeatInd = [];
 end
 
-cgsFile = '';
-if exist(fullfile(ksDir, 'cluster_groups.csv')) 
-    cgsFile = fullfile(ksDir, 'cluster_groups.csv');
-end
-if exist(fullfile(ksDir, 'cluster_group.tsv')) 
-   cgsFile = fullfile(ksDir, 'cluster_group.tsv');
-end 
-if ~isempty(cgsFile)
+% sorted, read from new info
+if exist(fullfile(ksDir, 'cluster_info.tsv'))
+    [cids, cgs] = readClusterGroups_bw(fullfile(ksDir, 'cluster_info.tsv'));
+% unsorted, use original reading method
+else
+    cgsFile = '';
+    if exist(fullfile(ksDir, 'cluster_groups.csv')) 
+        cgsFile = fullfile(ksDir, 'cluster_groups.csv');
+    end
+    if exist(fullfile(ksDir, 'cluster_group.tsv')) 
+       cgsFile = fullfile(ksDir, 'cluster_group.tsv');
+    end 
     [cids, cgs] = readClusterGroupsCSV(cgsFile);
+end
+
+if exist('cids')
 
     if params.excludeNoise
         noiseClusters = cids(cgs==0);

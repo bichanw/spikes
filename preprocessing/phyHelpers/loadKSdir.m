@@ -47,11 +47,12 @@ else
     cgsFile = '';
     if exist(fullfile(ksDir, 'cluster_groups.csv')) 
         cgsFile = fullfile(ksDir, 'cluster_groups.csv');
+        [cids, cgs] = readClusterGroupsCSV(cgsFile);
     end
     if exist(fullfile(ksDir, 'cluster_group.tsv')) 
        cgsFile = fullfile(ksDir, 'cluster_group.tsv');
+        [cids, cgs] = readClusterGroupsCSV(cgsFile);
     end 
-    [cids, cgs] = readClusterGroupsCSV(cgsFile);
 end
 
 if exist('cids')
